@@ -197,7 +197,6 @@ public class MovieCollection
             }
         }
 
-
         sortResults(results);
 
         // now, display them all to the user

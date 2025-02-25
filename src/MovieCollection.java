@@ -165,7 +165,63 @@ public class MovieCollection
 
     private void searchCast()
     {
+        ArrayList <String> allCastMembers = new ArrayList<String>();
 
+        for (Movie movie : movies) {
+            String[] castMembers = movie.getCast().split("\\|");
+            for (String castMember : castMembers) {
+                if (!allCastMembers.contains(castMember)) {
+                    allCastMembers.add(castMember);
+                }
+            }
+        }
+
+        allCastMembers.sort(null);
+
+        for (int i = 0; i < allCastMembers.size(); i++) {
+            int num = i + 1;
+            System.out.println(num + ". " + allCastMembers.get(i));
+        }
+
+        System.out.println("Which cast member you're interested in? ");
+        System.out.print("Enter number:");
+
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        String selectedCastMember = allCastMembers.get(choice - 1);
+        ArrayList <Movie> resultsMovie = new ArrayList <Movie>();
+        for (Movie movie : movies) {
+            if (movie.getCast().contains(selectedCastMember)) {
+                resultsMovie.add(movie);
+            }
+        }
+
+        sortResults(resultsMovie);
+
+        // now, display them all to the user
+        for (int i = 0; i < resultsMovie.size(); i++)
+        {
+            String title = resultsMovie.get(i).getTitle();
+
+            // this will print index 0 as choice 1 in the results list; better for user!
+            int choiceNum = i + 1;
+
+            System.out.println("" + choiceNum + ". " + title);
+        }
+
+        System.out.println("Which movie would you like to learn more about?");
+        System.out.print("Enter number: ");
+
+        choice = scanner.nextInt();
+        scanner.nextLine();
+
+        Movie selectedMovie = resultsMovie.get(choice - 1);
+
+        displayMovieInfo(selectedMovie);
+
+        System.out.println("\n ** Press Enter to Return to Main Menu **");
+        scanner.nextLine();
     }
 
     private void searchKeywords()

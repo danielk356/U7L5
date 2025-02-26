@@ -3,6 +3,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class MovieCollection
@@ -354,9 +356,27 @@ public class MovieCollection
 
     private void listHighestRated()
     {
-        ArrayList <Movie> top50Movies = new ArrayList <Movie>();
+        movies.sort(new UserRatingComparator());
 
+        ArrayList<Movie> top50Movies = new ArrayList<Movie>(movies.subList(0, 50));
 
+        for (int i = 0; i < top50Movies.size(); i++) {
+            int num = i + 1;
+            System.out.println(num + ". " + top50Movies.get(i).getTitle() + ": " + top50Movies.get(i).getUserRating());
+        }
+
+        System.out.println("Which movie would you like to learn more about?");
+        System.out.print("Enter number: ");
+
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        Movie selectedMovie = top50Movies.get(choice - 1);
+
+        displayMovieInfo(selectedMovie);
+
+        System.out.println("\n ** Press Enter to Return to Main Menu **");
+        scanner.nextLine();
     }
 
     private void listHighestRevenue()

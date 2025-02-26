@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -81,7 +82,7 @@ public class MovieCollection
 
     private void searchTitles()
     {
-        System.out.print("Enter a tital search term: ");
+        System.out.print("Enter a title search term: ");
         String searchTerm = scanner.nextLine();
 
         // prevent case sensitivity
@@ -175,15 +176,25 @@ public class MovieCollection
             }
         }
 
-        allCastMembers.sort(null);
+        System.out.print("Enter search term: ");
+        String searchTerm = scanner.nextLine();
 
-        for (int i = 0; i < allCastMembers.size(); i++) {
+        ArrayList <String> resultCast = new ArrayList <String>();
+        for (String castMember : allCastMembers) {
+            if (castMember.toLowerCase().contains(searchTerm.toLowerCase())) {
+                resultCast.add(castMember);
+            }
+        }
+
+        resultCast.sort(null);
+
+        for (int i = 0; i < resultCast.size(); i++) {
             int num = i + 1;
-            System.out.println(num + ". " + allCastMembers.get(i));
+            System.out.println(num + ". " + resultCast.get(i));
         }
 
         System.out.println("Which cast member you're interested in? ");
-        System.out.print("Enter number:");
+        System.out.print("Enter number: ");
 
         int choice = scanner.nextInt();
         scanner.nextLine();
@@ -343,6 +354,8 @@ public class MovieCollection
 
     private void listHighestRated()
     {
+        ArrayList <Movie> top50Movies = new ArrayList <Movie>();
+
 
     }
 

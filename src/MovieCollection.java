@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class MovieCollection
@@ -283,7 +282,63 @@ public class MovieCollection
 
     private void listGenres()
     {
+        ArrayList <String> allGenres = new ArrayList<String>();
 
+        for (Movie movie : movies) {
+            String[] genres = movie.getGenres().split("\\|");
+            for (String genre : genres) {
+                if (!allGenres.contains(genre)) {
+                    allGenres.add(genre);
+                }
+            }
+        }
+
+        allGenres.sort(null);
+
+        for (int i = 0; i < allGenres.size(); i++) {
+            int num = i + 1;
+            System.out.println(num + ". " + allGenres.get(i));
+        }
+
+        System.out.println("Which genre you're interested in? ");
+        System.out.print("Enter number: ");
+
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        String selectedGenre = allGenres.get(choice - 1);
+        ArrayList <Movie> resultsMovie = new ArrayList <Movie>();
+        for (Movie movie : movies) {
+            if (movie.getGenres().contains(selectedGenre)) {
+                resultsMovie.add(movie);
+            }
+        }
+
+        sortResults(resultsMovie);
+
+        // now, display them all to the user
+        for (int i = 0; i < resultsMovie.size(); i++)
+        {
+            String title = resultsMovie.get(i).getTitle();
+
+            // this will print index 0 as choice 1 in the results list; better for user!
+            int choiceNum = i + 1;
+
+            System.out.println("" + choiceNum + ". " + title);
+        }
+
+        System.out.println("Which movie would you like to learn more about?");
+        System.out.print("Enter number: ");
+
+        choice = scanner.nextInt();
+        scanner.nextLine();
+
+        Movie selectedMovie = resultsMovie.get(choice - 1);
+
+        displayMovieInfo(selectedMovie);
+
+        System.out.println("\n ** Press Enter to Return to Main Menu **");
+        scanner.nextLine();
     }
 
     private void listHighestRated()
